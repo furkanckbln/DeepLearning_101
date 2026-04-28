@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detector</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Fraud Detector</h1>
+                    <p>Kredi kartı dolandırıcılığı tespiti — PyTorch + FastAPI</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="card">
+                <div class="card-header">
+                    <h2>İşlem Verisi</h2>
+                    <div class="sample-buttons">
+                        <button class="btn btn-success" onclick="loadSample(0)">
+                            ✓ Normal Yükle
+                        </button>
+                        <button class="btn btn-danger" onclick="loadSample(1)">
+                            ⚠ Sahte Yükle
+                        </button>
+                    </div>
+                </div>
+
+                <form id="form" onsubmit="runPredict(event)">
+                    <div class="special-fields">
+                        <div class="field">
+                            <label for="Time">Time</label>
+                            <input type="number" id="Time" name="Time" step="any" placeholder="0.0" required>
+                        </div>
+                        <div class="field">
+                            <label for="Amount">Amount ($)</label>
+                            <input type="number" id="Amount" name="Amount" step="any" placeholder="0.00" required>
+                        </div>
+                    </div>
+
+                    <div class="divider">
+                        <span>PCA Bileşenleri — V1 ile V28</span>
+                    </div>
+
+                    <div class="v-grid" id="v-fields"></div>
+
+                    <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
+                        <span class="btn-text">Tahmin Et</span>
+                        <span class="btn-loading hidden">Analiz ediliyor…</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="card result-card hidden" id="result">
+                <div class="result-header" id="result-header">
+                    <div class="result-icon" id="result-icon"></div>
+                    <div>
+                        <div class="result-label" id="result-label"></div>
+                        <div class="result-sub">işlem analiz sonucu</div>
+                    </div>
+                </div>
+                <div class="result-body">
+                    <div class="prob-label">
+                        <span>Dolandırıcılık Olasılığı</span>
+                        <span id="prob-text"></span>
+                    </div>
+                    <div class="prob-bar-bg">
+                        <div class="prob-bar" id="prob-bar"></div>
+                    </div>
+                    <div class="prob-scale">
+                        <span>0%</span>
+                        <span>50%</span>
+                        <span>100%</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
